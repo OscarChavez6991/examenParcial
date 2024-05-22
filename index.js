@@ -35,7 +35,7 @@ const autenticar = async (req, res, next)=>{
     }
 }
 
-app.use('/auth', authRutas);
+app.use('/rutas', authRutas);
 app.use('/celular', autenticar, celularRutas);
 //utilizar las rutas de celular
 //app.use('/celular',celularRutas)

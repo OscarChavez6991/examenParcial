@@ -28,7 +28,7 @@ rutas.post('/iniciarsesion', async(req, res) => {
         if(!validarContrasenia)
             return res.status(401).json({error: 'Contraseña invalida'});
         //Creacion de token
-        const token = jwt.sign({usuarioId: usuario._id},'clave_secreta', {expiresIn: '1h'});
+        const token = jwt.sign({usuarioId: usuario._id},'clave_secreta', {expiresIn: '10h'});
         res.json({token});
     }
     catch(error){
