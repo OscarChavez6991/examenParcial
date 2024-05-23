@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 //ruta
 const celularRutas = require('./rutas/celularRutas');
-
+const tabletRutas = require('./rutas/tabletRutas');
 //configuraciones de environment
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
@@ -37,5 +37,6 @@ const autenticar = async (req, res, next)=>{
 
 app.use('/rutas', authRutas);
 app.use('/celular', autenticar, celularRutas);
+app.use('/tablet', autenticar, tabletRutas);
 //utilizar las rutas de celular
 //app.use('/celular',celularRutas)

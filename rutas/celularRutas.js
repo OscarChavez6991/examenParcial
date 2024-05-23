@@ -1,6 +1,7 @@
 const express = require('express');
 const rutas = express.Router();
 const CelularModel = require('../models/Celular');
+const UsuarioModel = require('../models/Usuario');
 
 //ENDPOINT 1 traer todos los celulares
 rutas.get('/traerCelulares',async(req, res) => {
@@ -18,7 +19,8 @@ rutas.post('/crearCelular', async (req, res) => {
         modelo: req.body.modelo,
         bateria: req.body.bateria,
         camara_f: req.body.camara_f,
-        camara_t: req.body.camara_t
+        camara_t: req.body.camara_t,
+        usuario: req.body.usuario //asignar id del usuario
     })
     try {
         const nuevoCelular = await celular.save();
@@ -85,6 +87,23 @@ rutas.get('/ordenarCelulares', async (req, res) => {
         res.status(500).json({ mensaje :  error.message})
     }
 });
+
+//Reportes 1
+rutas.get('/celularPorUsuario/:usuarioId', async(req, res) =>{
+    const {usuarioId} = req.params;
+    try{
+        const usuario = await UsuarioModel.findById(usuarioId);
+        if(!usuario)
+            return res.status(404).json({mensaje: 'usuario no encontrado'});
+        const celular = await CelularModel.find({usuario: usuarioId}).populate('usuario');
+        res.json(celular);
+
+    }catch(error){
+        res.status(500).json({mensaje: error.message})
+    }
+})
+
+
 
 module.exports = rutas;
 

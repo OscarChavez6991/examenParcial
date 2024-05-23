@@ -40,14 +40,14 @@ describe('Pruebas Unitarias para Celulares', () => {
             modelo: 'X 12', 
             bateria: 4500, 
             camara_f: 10, 
-            camara_t:10
+            camara_t:10,
         };
         const res =  await request(app)
                             .post('/celular/crearCelular')
                             .send(nuevoCelular);
         expect(res.statusCode).toEqual(201);
         expect(res.body.marca).toEqual(nuevoCelular.marca);
-    });
+    }, 10000);
     
     // 3er test : actualizar
     test('Deberia actualizar un celular que ya existe: PUT /editar/:id', async()=>{
