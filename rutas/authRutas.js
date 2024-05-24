@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-//Reguistro
+//Registro
 rutas.post('/registro', async(req, res) => {
     try{
         const {nombreusuario, correo, contrasenia} = req.body;
@@ -35,4 +35,6 @@ rutas.post('/iniciarsesion', async(req, res) => {
         res.status(500).json({mensaje: error.message});
     }
 });
+
+
 module.exports = rutas;

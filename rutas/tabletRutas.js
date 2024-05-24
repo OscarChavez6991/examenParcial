@@ -57,7 +57,7 @@ rutas.delete('/eliminarTablet/:id',async (req, res) => {
     }
 });
 
-//Reportes 1
+//Reportes 2
 rutas.get('/tabletPorUsuario/:usuarioId', async(req, res) =>{
     const {usuarioId} = req.params;
     try{
@@ -65,7 +65,7 @@ rutas.get('/tabletPorUsuario/:usuarioId', async(req, res) =>{
         if(!usuario)
             return res.status(404).json({mensaje: 'usuario no encontrado'});
         const tablet = await TabletModel.find({usuario: usuarioId}).populate('usuario');
-        res.json(celular);
+        res.json(tablet);
 
     }catch(error){
         res.status(500).json({mensaje: error.message})

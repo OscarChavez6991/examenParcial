@@ -2,6 +2,7 @@ const express = require('express');
 const rutas = express.Router();
 const CelularModel = require('../models/Celular');
 const UsuarioModel = require('../models/Usuario');
+const TabletModel = require('../models/Tablet');
 
 //ENDPOINT 1 traer todos los celulares
 rutas.get('/traerCelulares',async(req, res) => {
@@ -103,8 +104,39 @@ rutas.get('/celularPorUsuario/:usuarioId', async(req, res) =>{
     }
 })
 
+//Reporte Tablet y celular por usuario
+rutas.get('/celularyTabletPorUsuario', async (req, res) => {
+    try{
+        const celular = await CelularModel.find();
+        const reporte = await Promise.all(
+            celulares.map( async (celular1) => {
+                const tablet = await TabletModel.find({ marca: celular1.marca})
+                
+                return{
+                    celular: {
+                        marca: celular1.marca,
+                        modelo: celular1.modelo
+                    },
+                    tablet: tablet.map( r => ({
+                        _id: r._id,
+                        marca: r.marca,
+                        modelo: r.modelo
+                    })),
+                    tablet: tablet.map( r => ({
+                        _id: r._id,
+                        marca: r.marca,
+                        modelo: r.modelo
+                    }))
+                }
+            })
+        )
+        res.json(reporte);
+        console.log(reporte)
+    }catch(error){
+        res.status(500).json({mensaje : error.message})
+    }
 
-
+})
 module.exports = rutas;
 
 
